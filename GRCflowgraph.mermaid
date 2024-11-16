@@ -1,0 +1,24 @@
+graph TD
+    A[File Source] -->|Bytes| B[Packed to Unpacked]
+    B -->|Bits| C[Python Block: Packetizer]
+    C -->|Packets| D[GMSK Mod]
+    D -->|Complex| R1[Rational Resampler]
+    R1 -->|Complex| L1[Low Pass Filter]
+    L1 -->|Complex| T1[Throttle]
+    T1 -->|Complex| E[USRP/SDR Sink]
+    
+    F[USRP/SDR Source] -->|Complex| L2[Low Pass Filter]
+    L2 -->|Complex| R2[Rational Resampler]
+    R2 -->|Complex| T2[Throttle]
+    T2 -->|Complex| G[AGC]
+    G -->|Complex| H[GMSK Demod]
+    H -->|Bits| I[Packed to Unpacked]
+    I -->|Bytes| J[Python Block: Depacketizer]
+    J -->|Data| K[File Sink]
+    
+    style D fill:#69f,stroke:#333
+    style H fill:#69f,stroke:#333
+    style R1 fill:#9f6,stroke:#333
+    style R2 fill:#9f6,stroke:#333
+    style L1 fill:#f9f,stroke:#333
+    style L2 fill:#f9f,stroke:#333
